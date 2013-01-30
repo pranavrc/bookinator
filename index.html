@@ -10,7 +10,7 @@
 			<h1>Bookinator.</h1>
 			<textarea class="input-xxlarge" rows="20"></textarea><br />
 			<button class="btn btn-large btn-primary" type="button">Bookinate.</button><br />
-			<div id="book">
+			<div id="bookcontainer">
 			</div>
 			<script src="http://code.jquery.com/jquery-latest.js"></script>
 			<script src="./bootstrap/js/bootstrap.min.js"></script>
@@ -18,18 +18,23 @@
 		</div>
 
 		<script>
-			var pageContents;
-
 			$(document).ready(function() {
 				$('button.btn.btn-large.btn-primary').click(function() {
-					$('#book div').empty();
-					$('#book').unbind('turn');
+					$('#book').unbind();
+					$('#book').remove();
+					$('#bookcontainer div').empty();
 					var text = $('textarea.input-xxlarge').val();
-					pageContents = text.split("(break)");
+					var pageContents = text.split("(break)");
 					var noOfPages = pageContents.length;
 					for (var eachPage = 0; eachPage < noOfPages; eachPage++) {
-						if ((eachPage == 0 || eachPage == noOfPages) && pageContents[eachPage] != '') {
-							$('#book').append('<div class="hard content">' + pageContents[eachPage] + '</div>');
+						if ((eachPage == 0 || eachPage == noOfPages - 1) && pageContents[eachPage] != '') {
+							if (eachPage == 0) {
+								$('#bookcontainer').html('<div id="book">');
+								$('#book').html('<div class="hard content">' + pageContents[eachPage] + '</div>');
+							} else if(eachPage == noOfPages - 1) {
+								$('#book').append('<div class="hard content">' + pageContents[eachPage] + '</div>');
+								$('#bookcontainer').append('</div>');
+							}
 							continue;
 						}
 
