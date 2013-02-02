@@ -4,17 +4,21 @@
 		<title>Bookinator.</title>
 		<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="./index.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="./bootstrap/js/bootstrap.min.js"></script>
+		<script src="./turn.js/turn.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			<h1>Bookinator.</h1>
 			<textarea class="input-xxlarge" rows="20"></textarea><br />
 			<button class="btn btn-large btn-primary" type="button">Bookinate.</button><br />
-			<div id="bookcontainer">
-			</div>
-			<script src="http://code.jquery.com/jquery-latest.js"></script>
-			<script src="./bootstrap/js/bootstrap.min.js"></script>
-			<script src="./turn.js/turn.js"></script>
+		</div>
+
+		<div id="bookcontainer">
+		</div>
+
+		<div id="pagesource">
 		</div>
 
 		<script>
@@ -24,7 +28,8 @@
 					$('#book').remove();
 					$('#bookcontainer div').empty();
 					var text = $('textarea.input-xxlarge').val();
-					var pageContents = text.split("(break)");
+					var pageContents = text.split("----");
+					$('.container').remove();
 					var noOfPages = pageContents.length;
 					for (var eachPage = 0; eachPage < noOfPages; eachPage++) {
 						if ((eachPage == 0 || eachPage == noOfPages - 1) && pageContents[eachPage] != '') {
@@ -40,6 +45,8 @@
 
 						$('#book').append('<div class="content">' + pageContents[eachPage] + '</div>');
 					}
+
+					$('#pagesource').text(document.body.innerHTML);
 
 					$('#book').turn({
 						autoCenter: true
