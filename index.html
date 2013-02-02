@@ -4,7 +4,7 @@
 		<title>Bookinator.</title>
 		<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="./index.css" rel="stylesheet" media="screen">
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="./jquery-1.7.2.js"></script>
 		<script src="./bootstrap/js/bootstrap.min.js"></script>
 		<script src="./turn.js/turn.js"></script>
 	</head>
@@ -46,7 +46,7 @@
 						$('#book').append('<div class="content">' + pageContents[eachPage] + '</div>');
 					}
 
-					$('#pagesource').text(document.body.innerHTML);
+					$('#pagesource').text('<!DOCTYPE html><html>' + document.getElementsByTagName('html')[0].innerHTML + '</html>');
 
 					$('#book').turn({
 						autoCenter: true
