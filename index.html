@@ -14,7 +14,7 @@
 			<textarea class="title input-xxlarge" rows="1" placeholder="Book Cover."></textarea><br />
 			<textarea class="textcontent input-xxlarge" rows="18" placeholder="Book Content."></textarea><br />
 			<button class="bookinate btn btn-large btn-primary" type="button">Bookinate.</button>
-			<button class="pagebreaks btn btn-large btn-primary" type="button">Insert Page Breaks.</button><br />
+			<button class="pagebreaks btn btn-large btn-primary" type="button">Insert Page Break.</button><br />
 		</div>
 
 		<div id="bookcontainer">
@@ -25,6 +25,7 @@
 
 		<script>
 			var noOfPages;
+			var delimiter = "<pagebreak>"
 
 			$(document).ready(function() {
 				$('.bookinate').click(function() {
@@ -35,7 +36,7 @@
 					var title = $('textarea.title').val();
 					var text = $('textarea.textcontent').val();
 
-					var pageContents = text.split("----");
+					var pageContents = text.split(delimiter);
 					$('.container').remove();
 
 					$('#bookcontainer').html('<div id="book"></div>');
@@ -76,38 +77,46 @@
 
 				});
 				
-				function insertAtCaret(areaId, text) {
-					var txtarea = $('textarea.textcontent');
-				    var scrollPos = txtarea.scrollTop;
-				    var strPos = 0;
+				// stackoverflow credits for getCursorPosition(): http://stackoverflow.com/q/1891444
+				(function ($, undefined) {
+	    			$.fn.getCursorPosition = function() {
+    			    	var el = $(this).get(0);
+				        var pos = 0;
+				        if('selectionStart' in el) {
+				            pos = el.selectionStart;
+				        } else if('selection' in document) {
+			    	        el.focus();
+			        	    var Sel = document.selection.createRange();
+			            	var SelLength = document.selection.createRange().text.length;
+				            Sel.moveStart('character', -el.value.length);
+				            pos = Sel.text.length - SelLength;
+				        }
+				        return pos;
+			    	}
+				})(jQuery);
+				
+				function insertTextAtPosition(elementClass, textToInsert) {
+					var element = $(elementClass);
+				    var scrollPosition = element.scrollTop;
+				    var caretPosition = 0;
 					
-					strPos = txtarea.selectionStart;
-					alert(strPos);
+					caretPosition = element.getCursorPosition();
 					
-					var front = (txtarea.val()).substring(0, strPos);  
-					var back = (txtarea.val()).substring(strPos, txtarea.val().length); 
+					var preceding = (element.val()).substring(0, caretPosition);  
+					var succeeding = (element.val()).substring(caretPosition, element.val().length); 
 					
-					txtarea.val(front + text + back);
-				    strPos = strPos + text.length;
+					element.val(preceding + textToInsert + succeeding);
+				    caretPosition = caretPosition + textToInsert.length;
 		
-					/*if (br == "ie") { 
-				    	txtarea.focus();
-				    	var range = document.selection.createRange();
-				    	range.moveStart ('character', -txtarea.val().length);
-				    	range.moveStart ('character', strPos);
-				    	range.moveEnd ('character', 0);
-				    	range.select();
-				    }
-				    else if (br == "ff") {*/
-				    	txtarea.selectionStart = strPos;
-				    	txtarea.selectionEnd = strPos;
-				    	txtarea.focus();
-				    //}
-				    txtarea.scrollTop = scrollPos;
+				    element.selectionStart = caretPosition;
+				    element.selectionEnd = caretPosition;
+				    element.focus();
+					
+					element.scrollTop = scrollPosition;
 				}
 				
 				$('.pagebreaks').click(function() {
-					insertAtCaret('textarea.textcontent', '----');
+					insertTextAtPosition('textarea.textcontent', delimiter);
 				});
 			});
 		</script>
