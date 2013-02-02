@@ -30,14 +30,18 @@
 					$('#book').unbind();
 					$('#book').remove();
 					$('#bookcontainer div').empty();
+
 					var title = $('textarea.title').val();
 					var text = $('textarea.textcontent').val();
+
 					var pageContents = text.split("----");
 					$('.container').remove();
+
 					$('#bookcontainer').html('<div id="book"></div>');
 					$('#book').html('<div class="binding">' + title + '</div>');
 
 					noOfPages = pageContents.length + 2;
+
 					for (var eachPage = 0; eachPage < noOfPages; eachPage++) {
 						if (eachPage == 0 || eachPage == noOfPages - 1) { 
 							if (eachPage == 0) {
