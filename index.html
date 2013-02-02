@@ -11,7 +11,8 @@
 	<body>
 		<div class="container">
 			<h1>Bookinator.</h1>
-			<textarea class="input-xxlarge" rows="20"></textarea><br />
+			<textarea class="title input-xxlarge" rows="1" placeholder="Book Cover."></textarea><br />
+			<textarea class="textcontent input-xxlarge" rows="18" placeholder="Book Content."></textarea><br />
 			<button class="btn btn-large btn-primary" type="button">Bookinate.</button><br />
 		</div>
 
@@ -29,23 +30,25 @@
 					$('#book').unbind();
 					$('#book').remove();
 					$('#bookcontainer div').empty();
-					var text = $('textarea.input-xxlarge').val();
+					var title = $('textarea.title').val();
+					var text = $('textarea.textcontent').val();
 					var pageContents = text.split("----");
 					$('.container').remove();
-					noOfPages = pageContents.length;
+					$('#bookcontainer').html('<div id="book"></div>');
+					$('#book').html('<div class="binding">' + title + '</div>');
+
+					noOfPages = pageContents.length + 2;
 					for (var eachPage = 0; eachPage < noOfPages; eachPage++) {
-						if ((eachPage == 0 || eachPage == noOfPages - 1) && pageContents[eachPage] != '') {
+						if (eachPage == 0 || eachPage == noOfPages - 1) { 
 							if (eachPage == 0) {
-								$('#bookcontainer').html('<div id="book">');
-								$('#book').html('<div class="binding">' + pageContents[eachPage] + '</div>');
-							} else if(eachPage == noOfPages - 1) {
-								$('#book').append('<div class="content">' + pageContents[eachPage] + '</div>');
-								$('#bookcontainer').append('</div>');
+								$('#book').append('<div class="content"></div>');
+							} else if(eachPage == noOfPages - 1 && eachPage % 2 == 0) {
+								$('#book').append('<div class="content"></div>');
 							}
 							continue;
 						}
 
-						$('#book').append('<div class="content">' + pageContents[eachPage] + '</div>');
+						$('#book').append('<div class="content">' + pageContents[eachPage - 1] + '</div>');
 					}
 
 					$('#pagesource').text('<!DOCTYPE html><html>' + document.getElementsByTagName('html')[0].innerHTML + '</html>');
