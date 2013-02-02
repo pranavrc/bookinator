@@ -1,5 +1,5 @@
 body {
-	background-color: #666;
+	background: #ccc;
 	text-align: center;
 	padding-top: 10px;
 }
@@ -11,16 +11,17 @@ body {
 	top: 50%;
 	margin: 0 auto;
 	margin-bottom: 500px;
-	background-image:-webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
-	background-image:-moz-linear-gradient(left, #FFF 95%, #ddd 100%);
-	background-image:-o-linear-gradient(left, #FFF 95%, #ddd 100%);
-	background-image:-ms-linear-gradient(left, #FFF 95%, #ddd 100%);
 }
 
 #book .turn-page{
 	background-color:white;
-	background-image:-webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
-	background-image:-moz-linear-gradient(left, #FFF 95%, #ddd 100%);
-	background-image:-o-linear-gradient(left, #FFF 95%, #ddd 100%);
-	background-image:-ms-linear-gradient(left, #FFF 95%, #ddd 100%);
+}
+
+#book .binding {
+	background: #333;
+	font-size: 50px;
+	text-align: center;
+	line-height: 500px;
+	margin: 0px;
+	color: white;
 }
