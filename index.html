@@ -13,7 +13,8 @@
 			<h1>Bookinator.</h1>
 			<textarea class="title input-xxlarge" rows="1" placeholder="Book Cover."></textarea><br />
 			<textarea class="textcontent input-xxlarge" rows="18" placeholder="Book Content."></textarea><br />
-			<button class="btn btn-large btn-primary" type="button">Bookinate.</button><br />
+			<button class="bookinate btn btn-large btn-primary" type="button">Bookinate.</button>
+			<button class="pagebreaks btn btn-large btn-primary" type="button">Insert Page Breaks.</button><br />
 		</div>
 
 		<div id="bookcontainer">
@@ -26,7 +27,7 @@
 			var noOfPages;
 
 			$(document).ready(function() {
-				$('button.btn.btn-large.btn-primary').click(function() {
+				$('.bookinate').click(function() {
 					$('#book').unbind();
 					$('#book').remove();
 					$('#bookcontainer div').empty();
@@ -65,14 +66,48 @@
 						gradients: !$.isTouch
 					});
 
-					$(document).bind('keydown', function(e){
-						if (e.target && e.target.tagName.toLowerCase()!='input')
-							if (e.keyCode==37)
+					$(document).bind('keydown', function(key){
+						if (key.target && key.target.tagName.toLowerCase() != 'input')
+							if (key.keyCode==37)
 								$('#book').turn('previous');
-							else if (e.keyCode==39)
+							else if (key.keyCode==39)
 								$('#book').turn('next');
 					});
 
+				});
+				
+				function insertAtCaret(areaId, text) {
+					var txtarea = $('textarea.textcontent');
+				    var scrollPos = txtarea.scrollTop;
+				    var strPos = 0;
+					
+					strPos = txtarea.selectionStart;
+					alert(strPos);
+					
+					var front = (txtarea.val()).substring(0, strPos);  
+					var back = (txtarea.val()).substring(strPos, txtarea.val().length); 
+					
+					txtarea.val(front + text + back);
+				    strPos = strPos + text.length;
+		
+					/*if (br == "ie") { 
+				    	txtarea.focus();
+				    	var range = document.selection.createRange();
+				    	range.moveStart ('character', -txtarea.val().length);
+				    	range.moveStart ('character', strPos);
+				    	range.moveEnd ('character', 0);
+				    	range.select();
+				    }
+				    else if (br == "ff") {*/
+				    	txtarea.selectionStart = strPos;
+				    	txtarea.selectionEnd = strPos;
+				    	txtarea.focus();
+				    //}
+				    txtarea.scrollTop = scrollPos;
+				}
+				
+				$('.pagebreaks').click(function() {
+					insertAtCaret('textarea.textcontent', '----');
 				});
 			});
 		</script>
