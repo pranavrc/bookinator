@@ -1,6 +1,16 @@
+body {
+	background-color: #666;
+	text-align: center;
+	padding-top: 10px;
+}
+
 #book {
-	width:800px;
-	height:500px;
+	position: absolute;
+	width: 80%;
+	height: 95%;
+	top: 50%;
+	margin: 0 auto;
+	margin-bottom: 500px;
 	background-image:-webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
 	background-image:-moz-linear-gradient(left, #FFF 95%, #ddd 100%);
 	background-image:-o-linear-gradient(left, #FFF 95%, #ddd 100%);
