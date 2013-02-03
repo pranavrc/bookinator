@@ -18,6 +18,9 @@
 		</div>
 
 		<div id="bookcontainer">
+		</div><br />
+		
+		<div id="reloadbtn">
 		</div>
 
 		<div id="pagesource">
@@ -25,7 +28,7 @@
 
 		<script>
 			var noOfPages;
-			var delimiter = "<pagebreak>"
+			var delimiter = '<pagebreak>';
 
 			$(document).ready(function() {
 				$('.bookinate').click(function() {
@@ -56,7 +59,8 @@
 
 						$('#book').append('<div class="content">' + pageContents[eachPage - 1] + '</div>');
 					}
-
+					
+					$('#reloadbtn').html('<button id="reload" type="button">Go back.</button>');
 					$('#pagesource').text('<!DOCTYPE html><html>' + document.getElementsByTagName('html')[0].innerHTML + '</html>');
 
 					$('#book').turn({
@@ -67,7 +71,11 @@
 						gradients: !$.isTouch
 					});
 
-					$(document).bind('keydown', function(key){
+					$('#reload').click(function() {
+						document.location.reload();
+					});
+
+					$(document).bind('keydown', function(key) {
 						if (key.target && key.target.tagName.toLowerCase() != 'input')
 							if (key.keyCode==37)
 								$('#book').turn('previous');
