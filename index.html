@@ -23,7 +23,6 @@
 				height: 95%;
 				top: 50%;
 				margin: 0 auto;
-				line-height: 120%;
 			}
 
 			#book .turn-page{
@@ -45,8 +44,8 @@
 	<body>
 		<div class="container">
 			<h1>Bookinate.</h1>
-			<textarea class="title input-xxlarge" rows="1" placeholder="Book Cover."></textarea><br />
-			<textarea class="textcontent input-xxlarge" rows="18" placeholder="Book Content."></textarea><br />
+			<textarea class="title input-xxlarge" rows="1" placeholder="Book Cover/Title."></textarea><br />
+			<textarea class="textcontent input-xxlarge" rows="18" placeholder="Book Content (HTML/Text).											Use Shift + Left-click or Insert Page Break button for a page break."></textarea><br />
 			<button class="bookinate btn btn-large btn-primary" type="button">Bookinate.</button>
 			<button class="pagebreaks btn btn-large btn-primary" type="button">Insert Page Break.</button><br />
 		</div>
@@ -62,6 +61,7 @@
 			var delimiter = '<pagebreak>';
 
 			$(document).ready(function() {
+				$('textarea.title').focus();
 				$('.bookinate').click(function() {
 					$('#book').unbind();
 					$('#book').remove();
@@ -111,9 +111,9 @@
 
 					$(document).bind('keydown', function(key) {
 						if (key.target && key.target.tagName.toLowerCase() != 'input')
-							if (key.keyCode==37)
+							if (key.keyCode == 37)
 								$('#book').turn('previous');
-							else if (key.keyCode==39)
+							else if (key.keyCode == 39)
 								$('#book').turn('next');
 					});
 
@@ -159,6 +159,12 @@
 
 				$('.pagebreaks').click(function() {
 					insertTextAtPosition('textarea.textcontent', delimiter);
+				});
+
+				$(document).click(function(key) {
+					if (key.shiftKey) {
+						insertTextAtPosition('textarea.textcontent', delimiter);
+					}
 				});
 			});
 		</script>
